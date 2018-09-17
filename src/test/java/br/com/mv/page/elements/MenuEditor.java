@@ -14,13 +14,14 @@ public class MenuEditor extends HomePage {
         super(driver);
 
 
-        HashMap<String, By> fields = new HashMap<>();
         fields.put("botão Nova Pasta", (By.id("new-folder")));
         fields.put("botão import", (By.id("import")));
         fields.put("botão export", (By.id("export")));
 
         BasePage.fields = fields;
     }
+
+    protected HashMap<String, Object> fields = new HashMap<>();
 
 
 }

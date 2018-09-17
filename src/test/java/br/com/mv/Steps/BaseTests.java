@@ -9,9 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTests {
 
-    private WebDriverWait wait;
-    // public static BasePage page;
-
     @Before
     public void setup() throws InterruptedException {
 
@@ -23,7 +20,7 @@ public class BaseTests {
         WebDriver driver = new ChromeDriver();
 
         //Create a wait. All test classes use this.
-        wait = new WebDriverWait(driver, 15);
+//        wait = new WebDriverWait(driver, 15);
 
         //Maximize Window
         driver.manage().window().maximize();
@@ -36,7 +33,7 @@ public class BaseTests {
 
         BasePage.getDriver().get("http://editor3-app-balancer-343154102.us-east-1.elb.amazonaws.com/mveditor/index.html");
 
-        Thread.sleep(500);
+//        Thread.sleep(500);
 
     }
 

@@ -1,10 +1,10 @@
 package br.com.mv.Steps;
 
 import br.com.mv.framework.BasePage;
-import br.com.mv.page.elements.MenuEditor;
-import br.com.mv.page.elements.NewFolderModal;
+import br.com.mv.framework.ListElements;
 import cucumber.api.PendingException;
 import cucumber.api.java.pt.*;
+import org.junit.Assert;
 
 
 public class ContaTestes {
@@ -37,7 +37,7 @@ public class ContaTestes {
     }
 
     @Entao("^eu seleciono o valor \"(.*)\" no \"([^\"]*)\" combobox$")
-    public void euSelecionoOValorNoCombobox(String arg0, String arg1) {
+    public void euSelecionoOValorNoCombobox(String arg0, String arg1) throws InterruptedException {
 
 //        BasePage.getInstance(NewFolderModal.class).selectValue(arg1, arg0);
         page.selectValue(arg1, arg0);
@@ -55,9 +55,9 @@ public class ContaTestes {
     }
 
     @Quando("^eu seleciono o valor \"([^\"]*)\" na lista \"([^\"]*)\"$")
-    public void euClicarEmNaLista(String arg0, String arg1) {
+    public void euSelecionoNaLista(String arg0, String arg1) {
 
-        page.selectValueInList(arg1, arg0);
+        ((ListElements) page).selectValueInList(arg1, arg0);
     }
 
 
@@ -80,9 +80,30 @@ public class ContaTestes {
         page.writeText(arg0, arg1);
     }
 
-    @E("^eu espero o elemento \"([^\"]*)\" ficar \"([^\"]*)\"$")
-    public void euEsperoOElementoFicar(String arg0, String arg1) throws Throwable {
+    @E("^eu espero o elemento \"([^\"]*)\" ficar \"(visivel|invisivel)\"$")
+    public void euEsperoOElementoFicar(String element, String condition) {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        page.isVisible(element, condition);
+    }
+
+    @Quando("^eu clico duas vezes no elemento \"(.*)\"$")
+    public void euClicoDuasVezesNoElemento(String element) {
+        page.doubleClick(element);
+    }
+
+    @Quando("^eu clico duas vezes no valor \"([^\"]*)\" na lista \"([^\"]*)\"$")
+    public void euClicoDuasVezesNoValorNaLista(String value, String list) {
+        ((ListElements) page).doubleClickInList(list, value);
+    }
+
+    @E("^o valor do elemento \"(.*)\" for igual à \"(.*)\"$")
+    public void oValorDoElementoForIgualÀ(String element, String condition) {
+        Assert.assertEquals(page.readText(element), condition);
+    }
+
+    @E("^o valor do elemento na posição \"([^\"]*)\" for igual à \"([^\"]*)\"$")
+    public void oValorDoElementoNaPosiçãoForIgualÀ(int position, String condition) {
+        ((ListElements) page).selectValueInListByPosition(position, condition);
+
     }
 }

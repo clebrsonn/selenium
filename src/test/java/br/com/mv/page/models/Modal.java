@@ -18,7 +18,7 @@ public class Modal extends BasePage {
         BasePage.fields = this.fields;
     }
 
-    protected HashMap<String, By> fields = new HashMap<>();
+    protected HashMap<String, Object> fields = new HashMap<>();
 
 
 }

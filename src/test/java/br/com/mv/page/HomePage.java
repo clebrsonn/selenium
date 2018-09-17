@@ -21,6 +21,6 @@ public class HomePage extends BasePage {
 //        fields.put("Username field", getDriver().findElement(By.id("email")));
     }
 
-    private HashMap<String, WebElement> fields;
+    private HashMap<String, Object> fields;
 
 }

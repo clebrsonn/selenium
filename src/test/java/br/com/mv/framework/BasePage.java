@@ -1,16 +1,22 @@
 package br.com.mv.framework;
 
+import br.com.mv.framework.exceptions.BusinessException;
 import br.com.mv.page.HomePage;
 import br.com.mv.page.LoginPage;
 import br.com.mv.page.elements.DocumentList;
 import br.com.mv.page.elements.MenuEditor;
 import br.com.mv.page.elements.NewFolderModal;
+import br.com.mv.page.elements.SubGroup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +25,9 @@ public class BasePage {
 
 
     private static WebDriver driver;
-    protected static HashMap<String, By> fields = new HashMap<>();
+    protected static HashMap<String, Object> fields = new HashMap<>();
 
     protected static HashMap<String, Object> pages = new HashMap<>();
-
-    private static final String VISIBLE = "visivel";
-    private static final String INVISIBLE = "invisivel";
-    private static final String ACTIVE = "ativo";
-    private static final String INACTIVE = "inativo";
 
     public BasePage(WebDriver driver) {
         setDriver(driver);
@@ -34,11 +35,6 @@ public class BasePage {
                 executeScript("return document.readyState").equals("complete"));
 
     }
-
-
-//    public void setMap(String key, WebElement value) {
-//        this.map.put(key, value);
-//    }
 
     public static WebDriver getDriver() {
         return driver;
@@ -53,6 +49,7 @@ public class BasePage {
     public static <TPage extends BasePage> TPage getInstance(String pageName) {
         pages.put("new folder modal", NewFolderModal.class);
         pages.put("Document List", DocumentList.class);
+        pages.put("Sub Group List", SubGroup.class);
         pages.put("Menu Editor", MenuEditor.class);
         pages.put("Home", HomePage.class);
         pages.put("Login", LoginPage.class);
@@ -74,67 +71,32 @@ public class BasePage {
         }
     }
 
-//    public WebElement getMap(String key) {
-//        return map.get(key);
-//    }
+    public <T> void selectValue(T elementAttr, String value) throws InterruptedException {
+        Select select = new Select(getWebElement(elementAttr));
+        select.selectByVisibleText(value);
+        new WebDriverWait(driver, 30);
 
-
-    public <T> void selectValue(T elementAttr, String value) {
-        if (elementAttr instanceof String) {
-            elementAttr = (T) fields.get(elementAttr);
-        }
-        if (elementAttr.getClass().getName().contains("By")) {
-            Select select = new Select(getDriver().findElement((By) elementAttr));
-            select.selectByVisibleText(value);
-        } else {
-            Select select = new Select(((WebElement) elementAttr));
-            select.selectByVisibleText(value);
-        }
     }
 
 
     //Click Method by using JAVA Generics (You can use both By or Webelement)
     public <T> void click(T elementAttr) {
 
-        if (elementAttr instanceof String) {
-
-            elementAttr = (T) fields.get(elementAttr);
-        }
-        if (elementAttr.getClass().getName().contains("By")) {
-            getDriver().findElement((By) elementAttr).click();
-        } else {
-            ((WebElement) elementAttr).click();
-        }
+        new WebDriverWait(getDriver(), 10)
+                .until(ExpectedConditions
+                        .elementToBeClickable(getWebElement(elementAttr)));
+        getWebElement(elementAttr).click();
     }
 
     //Write Text by using JAVA Generics (You can use both By or Webelement)
     public <T> void writeText(T elementAttr, String text) {
-        if (elementAttr instanceof String) {
-
-            elementAttr = (T) fields.get(elementAttr);
-        }
-
-        if (elementAttr.getClass().getName().contains("By")) {
-            getDriver().findElement((By) elementAttr).clear();
-            getDriver().findElement((By) elementAttr).sendKeys(text);
-        } else {
-            ((WebElement) elementAttr).clear();
-            ((WebElement) elementAttr).sendKeys(text);
-        }
+        getWebElement(elementAttr).clear();
+        getWebElement(elementAttr).sendKeys(text);
     }
 
     //Read Text by using JAVA Generics (You can use both By or Webelement)
     public <T> String readText(T elementAttr) {
-        if (elementAttr instanceof String) {
-
-            elementAttr = (T) fields.get(elementAttr);
-        }
-
-        if (elementAttr.getClass().getName().contains("By")) {
-            return getDriver().findElement((By) elementAttr).getText();
-        } else {
-            return ((WebElement) elementAttr).getText();
-        }
+        return getWebElement(elementAttr).getText();
     }
 
     //Close popup if exists
@@ -155,11 +117,10 @@ public class BasePage {
         return ExpectedConditions.titleIs(title);
     }
 
+
     public <T> void isPresent(String elementAttr) {
 
-        By element = fields.get(elementAttr);
-
-        element.isDisplayed();
+        By element = (By) fields.get(elementAttr);
 
         new WebDriverWait(getDriver(), 10)
                 .until(ExpectedConditions
@@ -167,43 +128,56 @@ public class BasePage {
     }
 
 
-    public <T> void selectValueInList(T element, String childElement) {
-        if (element instanceof String) {
-            element = fields.get(element);
-        }
-        WebElement webElement = (WebElement) element;
-        webElement.click();
-        new WebDriverWait(getDriver(), 10)
-                .until(ExpectedConditions
-                        .presenceOfNestedElementLocatedBy(webElement, By.linkText(childElement)));
-        webElement.findElement(By.linkText(childElement)).click();
-    }
-
-
-    public void isActive(String element, String condition) throws Exception {
+    public void isActive(String element, String condition) throws BusinessException {
         boolean active = false;
-        if (condition.equalsIgnoreCase(ACTIVE)) {
-            active = fields.get(element).isEnabled();
+        if (condition.equalsIgnoreCase(Comparator.ACTIVE)) {
+            active = getWebElement(element).isEnabled();
 
-        } else if (condition.equalsIgnoreCase(INACTIVE)) {
-            active = !fields.get(element).isEnabled();
+        } else if (condition.equalsIgnoreCase(Comparator.INACTIVE)) {
+            active = !getWebElement(element).isEnabled();
         }
 
         if (!active) {
-            throw new Exception("Elemento não está " + condition + "!");
+            throw new BusinessException("Elemento não está " + condition + "!");
         }
 
     }
 
     public void isVisible(String element, String condition) {
-        if (condition.equalsIgnoreCase(VISIBLE)) {
-            new WebDriverWait(getDriver(), 10)
+        if (condition.equalsIgnoreCase(Comparator.VISIBLE)) {
+            new WebDriverWait(getDriver(), 20)
                     .until(ExpectedConditions
-                            .visibilityOf(fields.get(element)));
+                            .visibilityOf(getWebElement(element)));
 
-        } else if (condition.equalsIgnoreCase(INVISIBLE)) {
-            new WebDriverWait(getDriver(), 10)
-                    .until(ExpectedConditions.invisibilityOf(fields.get(element)));
+        } else if (condition.equalsIgnoreCase(Comparator.INVISIBLE)) {
+            new WebDriverWait(getDriver(), 20)
+                    .until(ExpectedConditions.invisibilityOf(getWebElement(element)));
         }
     }
+
+    protected <T> WebElement getWebElement(T elementAttr) {
+        if (elementAttr instanceof String) {
+            elementAttr = (T) fields.get(elementAttr);
+        }
+        if (elementAttr.getClass().getName().contains("By")) {
+            return getDriver().findElement((By) elementAttr);
+        } else {
+            return (WebElement) elementAttr;
+        }
+
+    }
+
+    public <T> void doubleClick(T element) {
+
+        Actions actions = new Actions(getDriver());
+
+        new WebDriverWait(getDriver(), 10)
+                .until(ExpectedConditions
+                        .visibilityOf(getWebElement(element)));
+
+
+        actions.doubleClick(getWebElement(element)).perform();
+    }
+
+
 }
