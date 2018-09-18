@@ -1,7 +1,7 @@
 package br.com.mv.page.elements;
 
 import br.com.mv.framework.BasePage;
-import br.com.mv.page.models.Modal;
+import br.com.mv.framework.Modal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

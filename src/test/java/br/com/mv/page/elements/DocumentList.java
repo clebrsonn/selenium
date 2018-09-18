@@ -2,12 +2,10 @@ package br.com.mv.page.elements;
 
 import br.com.mv.framework.BasePage;
 import br.com.mv.framework.ListElements;
-import br.com.mv.page.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class DocumentList extends ListElements {
 
 
     private void chargeList() {
+
         List<WebElement> elements = getDriver().findElements(By.cssSelector(".edit-document-list > div.card"));
         elements.forEach(webElement -> fields.put(webElement.getText().split("\n")[1], webElement));
     }

@@ -1,12 +1,9 @@
 package br.com.mv.framework;
 
 import br.com.mv.framework.exceptions.BusinessException;
-import br.com.mv.page.HomePage;
+import br.com.mv.page.DocumentViewer;
 import br.com.mv.page.LoginPage;
-import br.com.mv.page.elements.DocumentList;
-import br.com.mv.page.elements.MenuEditor;
-import br.com.mv.page.elements.NewFolderModal;
-import br.com.mv.page.elements.SubGroup;
+import br.com.mv.page.elements.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -20,13 +17,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
 
     private static WebDriver driver;
     protected static HashMap<String, Object> fields = new HashMap<>();
-
     protected static HashMap<String, Object> pages = new HashMap<>();
 
     public BasePage(WebDriver driver) {
@@ -47,11 +44,18 @@ public class BasePage {
     //JAVA Generics to Create and return a New Page
 
     public static <TPage extends BasePage> TPage getInstance(String pageName) {
-        pages.put("new folder modal", NewFolderModal.class);
+
+        //MODALS
+        pages.put("New Folder", NewFolderModal.class);
+        pages.put("New Document", NewDocumentModal.class);
+
+        //PAGE ELEMENTS
         pages.put("Document List", DocumentList.class);
         pages.put("Sub Group List", SubGroup.class);
         pages.put("Menu Editor", MenuEditor.class);
-        pages.put("Home", HomePage.class);
+
+        //PAGES
+        pages.put("Home", DocumentViewer.class);
         pages.put("Login", LoginPage.class);
 
 
@@ -71,7 +75,7 @@ public class BasePage {
         }
     }
 
-    public <T> void selectValue(T elementAttr, String value) throws InterruptedException {
+    public <T> void selectValue(T elementAttr, String value) {
         Select select = new Select(getWebElement(elementAttr));
         select.selectByVisibleText(value);
         new WebDriverWait(driver, 30);
@@ -82,9 +86,6 @@ public class BasePage {
     //Click Method by using JAVA Generics (You can use both By or Webelement)
     public <T> void click(T elementAttr) {
 
-        new WebDriverWait(getDriver(), 10)
-                .until(ExpectedConditions
-                        .elementToBeClickable(getWebElement(elementAttr)));
         getWebElement(elementAttr).click();
     }
 
@@ -96,6 +97,7 @@ public class BasePage {
 
     //Read Text by using JAVA Generics (You can use both By or Webelement)
     public <T> String readText(T elementAttr) {
+        getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return getWebElement(elementAttr).getText();
     }
 

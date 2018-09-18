@@ -11,16 +11,21 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.HashMap;
 
 
-public class HomePage extends BasePage {
+public class DocumentViewer extends BasePage {
 
     //*********Constructor*********
-    public HomePage(WebDriver driver) {
+    public DocumentViewer(WebDriver driver) {
         super(driver);
 
         //example
 //        fields.put("Username field", getDriver().findElement(By.id("email")));
+
+        fields.put("notification success", By.cssSelector(".notifications .sucess"));
+        fields.put("title", By.cssSelector(".document-view .title-text h1.title"));
+
+        BasePage.fields = fields;
     }
 
-    private HashMap<String, Object> fields;
+    private HashMap<String, Object> fields = new HashMap<>();
 
 }

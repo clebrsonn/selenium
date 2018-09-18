@@ -2,12 +2,14 @@ package br.com.mv.Steps;
 
 import br.com.mv.framework.BasePage;
 import br.com.mv.framework.ListElements;
-import cucumber.api.PendingException;
+import br.com.mv.framework.exceptions.BusinessException;
 import cucumber.api.java.pt.*;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
 
 public class ContaTestes {
+
 
     private BasePage page;
 
@@ -15,8 +17,6 @@ public class ContaTestes {
     public void queEuVouAPagina(String pageTitle) {
 
         page = BasePage.getInstance(pageTitle);
-
-//        page.iAmOn(pageTitle);
 
     }
 
@@ -27,20 +27,20 @@ public class ContaTestes {
     }
 
     @Quando("^eu clicar no \"(.*)\"$")
-    public void euClicarNo(String arg0) {
-        page.click(arg0);
+    public void euClicarNo(String element) {
+        page.click(element);
     }
 
     @Quando("^o elemento \"(.*)\" carregar$")
-    public void oElementoCarregar(String arg0) {
-        page.isPresent(arg0);
+    public void oElementoCarregar(String element) {
+        page.isPresent(element);
     }
 
     @Entao("^eu seleciono o valor \"(.*)\" no \"([^\"]*)\" combobox$")
-    public void euSelecionoOValorNoCombobox(String arg0, String arg1) throws InterruptedException {
+    public void euSelecionoOValorNoCombobox(String value, String element) {
 
 //        BasePage.getInstance(NewFolderModal.class).selectValue(arg1, arg0);
-        page.selectValue(arg1, arg0);
+        page.selectValue(element, value);
 
     }
 
@@ -51,13 +51,15 @@ public class ContaTestes {
     }
 
     @Entao("^eu seleciono o valor \"([^\"]*)\" na lista$")
-    public void euSelecionoOValorNaLista(String arg0) {
+    public void euSelecionoOValorNaLista(String value) {
+
+        ((ListElements) page).selectValueInList(value);
     }
 
     @Quando("^eu seleciono o valor \"([^\"]*)\" na lista \"([^\"]*)\"$")
-    public void euSelecionoNaLista(String arg0, String arg1) {
+    public void euSelecionoNaLista(String value, String list) {
 
-        ((ListElements) page).selectValueInList(arg1, arg0);
+        ((ListElements) page).selectValueInListWithList(value, list);
     }
 
 
@@ -75,9 +77,9 @@ public class ContaTestes {
     }
 
     @E("^eu preencher o campo \"([^\"]*)\" com o valor \"([^\"]*)\"$")
-    public void euPreencherOCampoComOValor(String arg0, String arg1) throws Throwable {
+    public void euPreencherOCampoComOValor(String element, String arg1) {
         // Write code here that turns the phrase above into concrete actions
-        page.writeText(arg0, arg1);
+        page.writeText(element, arg1);
     }
 
     @E("^eu espero o elemento \"([^\"]*)\" ficar \"(visivel|invisivel)\"$")
@@ -101,9 +103,22 @@ public class ContaTestes {
         Assert.assertEquals(page.readText(element), condition);
     }
 
-    @E("^o valor do elemento na posição \"([^\"]*)\" for igual à \"([^\"]*)\"$")
+    @E("^o valor do elemento na posição \"([^\"]*)\" é igual à \"([^\"]*)\"$")
     public void oValorDoElementoNaPosiçãoForIgualÀ(int position, String condition) {
-        ((ListElements) page).selectValueInListByPosition(position, condition);
+        WebElement webElement = ((ListElements) page).selectValueInListByPosition(position);
 
+        Assert.assertEquals(page.readText(webElement), condition);
+
+
+    }
+
+    @E("^eu clico duas vezes no elemento da posição \"([0-9]*)\"$")
+    public void euClicoDuasVezesNoElementoDaPosição(int position) {
+        ((ListElements) page).doubleClickInPosition(position);
+    }
+
+    @Então("^o elemento com o valor \"([^\"]*)\" \"(existe|nao existe)\" na lista \"([^\"]*)\"$")
+    public void oElementoComOValorNãoExisteNaLista(String value, String condition, String list) throws BusinessException {
+        ((ListElements) page).existElementWithValueInList(value, condition, list);
     }
 }

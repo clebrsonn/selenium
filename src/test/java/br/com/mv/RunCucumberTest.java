@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
  */
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "features", tags = "@br.com.mv.Steps.ContaTestes",
+@CucumberOptions(features = "features", tags = {"@br.com.mv.Steps.ContaTestes", "@br.com.mv.Steps.DocumentTest"},
         glue = "br.com.mv.Steps", monochrome = true, dryRun = false)
 public class RunCucumberTest {
 }

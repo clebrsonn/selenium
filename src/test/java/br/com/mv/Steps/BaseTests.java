@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BaseTests {
 
     @Before
-    public void setup() throws InterruptedException {
+    public void setup() {
 
         System.setProperty("webdriver.chrome.driver",
                 "C:\\projects\\sel\\src\\test\\resources\\chromedriver\\chromedriver.exe");
