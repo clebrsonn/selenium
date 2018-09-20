@@ -9,16 +9,26 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.List;
 
-public class DocumentList extends ListElements {
+public class GroupList extends ListElements {
 
 
-    public DocumentList(WebDriver driver) {
+    public GroupList(WebDriver driver) {
         super(driver);
 
         fields.put("document list", (By.className("edit-document-list")));
+
+        fields.put("confirm button", (By.cssSelector(".edit-document-list " +
+                "> div.card  .card-header .edit .edit-buttons button.save-edit")));
+
+        fields.put("remove button", (By.cssSelector(".edit-document-list " +
+                "> div.card  .card-header .edit .edit-buttons button.delete-group")));
+
+        fields.put("input folder name",
+                (By.cssSelector(".edit-document-list > div.card .card-header .edit input")));
+        chargeList();
+
         BasePage.fields = fields;
 
-        chargeList();
     }
 
     protected HashMap<String, Object> fields = new HashMap<>();

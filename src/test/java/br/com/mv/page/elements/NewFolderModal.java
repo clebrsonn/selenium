@@ -14,7 +14,7 @@ public class NewFolderModal extends Modal {
         this.fields.put("new folder modal", (By.cssSelector("#new-folder-modal .modal-header")));
         fields.put("folder name", (By.cssSelector("#new-folder-modal .modal-body > .name > input")));
         fields.put("folder directory", (By.cssSelector("#new-folder-modal .modal-body > .directory > select")));
-        fields.put("botão salvar", (By.cssSelector("#new-folder-modal .modal-footer > button.btn-outline-primary")));
+        fields.put("botão criar", (By.cssSelector("#new-folder-modal .modal-footer > button.btn-outline-primary")));
         fields.put("botão cancelar", (By.cssSelector("#new-folder-modal .modal-footer > button.btn-outline-default")));
 
         BasePage.fields = this.fields;

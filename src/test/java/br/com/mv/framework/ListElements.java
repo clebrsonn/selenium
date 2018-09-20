@@ -73,4 +73,16 @@ public class ListElements extends BasePage {
         }
 
     }
+
+    public void clickInValueInListByPosition(int position) {
+
+        getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+//TODO: verificar como generalizar para qualquer filho de uma lista e não o li.
+        WebElement webElement = getDriver().findElement(By.cssSelector(" li:nth-child(" + position + ")"));
+
+        click(webElement);
+    }
+
+
 }

@@ -20,7 +20,6 @@ public class DocumentViewer extends BasePage {
         //example
 //        fields.put("Username field", getDriver().findElement(By.id("email")));
 
-        fields.put("notification success", By.cssSelector(".notifications .sucess"));
         fields.put("title", By.cssSelector(".document-view .title-text h1.title"));
 
         BasePage.fields = fields;

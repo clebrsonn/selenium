@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.HashMap;
 import java.util.List;
 
-public class SubGroup extends DocumentList {
+public class SubGroup extends GroupList {
 
 
     public SubGroup(WebDriver driver) {

@@ -24,7 +24,7 @@ public class BasePage {
 
     private static WebDriver driver;
     protected static HashMap<String, Object> fields = new HashMap<>();
-    protected static HashMap<String, Object> pages = new HashMap<>();
+    protected static HashMap<String, Class> pages = new HashMap<>();
 
     public BasePage(WebDriver driver) {
         setDriver(driver);
@@ -45,12 +45,16 @@ public class BasePage {
 
     public static <TPage extends BasePage> TPage getInstance(String pageName) {
 
+        //NOTIFICATIONS
+        pages.put("Notifications", Notifications.class);
+
         //MODALS
         pages.put("New Folder", NewFolderModal.class);
         pages.put("New Document", NewDocumentModal.class);
+        pages.put("New Document2", NewDocumentModal2.class);
 
         //PAGE ELEMENTS
-        pages.put("Document List", DocumentList.class);
+        pages.put("Document List", GroupList.class);
         pages.put("Sub Group List", SubGroup.class);
         pages.put("Menu Editor", MenuEditor.class);
 
@@ -166,7 +170,6 @@ public class BasePage {
         } else {
             return (WebElement) elementAttr;
         }
-
     }
 
     public <T> void doubleClick(T element) {

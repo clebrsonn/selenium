@@ -3,6 +3,7 @@ package br.com.mv.Steps;
 import br.com.mv.framework.BasePage;
 import br.com.mv.framework.ListElements;
 import br.com.mv.framework.exceptions.BusinessException;
+import cucumber.api.PendingException;
 import cucumber.api.java.pt.*;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -45,7 +46,7 @@ public class ContaTestes {
     }
 
     @Quando("^A página \"(.*)\" carregar$")
-    public void aPaginaCarregar(String arg0) throws Throwable {
+    public void aPaginaCarregar(String arg0){
         // Write code here that turns the phrase above into concrete actions
 //        BasePage.getInstance(MenuEditor.class).wait(500);
     }
@@ -99,12 +100,12 @@ public class ContaTestes {
     }
 
     @E("^o valor do elemento \"(.*)\" for igual à \"(.*)\"$")
-    public void oValorDoElementoForIgualÀ(String element, String condition) {
+    public void oValorDoElementoForIgualA(String element, String condition) {
         Assert.assertEquals(page.readText(element), condition);
     }
 
     @E("^o valor do elemento na posição \"([^\"]*)\" é igual à \"([^\"]*)\"$")
-    public void oValorDoElementoNaPosiçãoForIgualÀ(int position, String condition) {
+    public void oValorDoElementoNaPosiçãoForIgualA(int position, String condition) {
         WebElement webElement = ((ListElements) page).selectValueInListByPosition(position);
 
         Assert.assertEquals(page.readText(webElement), condition);
@@ -113,12 +114,18 @@ public class ContaTestes {
     }
 
     @E("^eu clico duas vezes no elemento da posição \"([0-9]*)\"$")
-    public void euClicoDuasVezesNoElementoDaPosição(int position) {
+    public void euClicoDuasVezesNoElementoDaPosicao(int position) {
         ((ListElements) page).doubleClickInPosition(position);
     }
 
     @Então("^o elemento com o valor \"([^\"]*)\" \"(existe|nao existe)\" na lista \"([^\"]*)\"$")
-    public void oElementoComOValorNãoExisteNaLista(String value, String condition, String list) throws BusinessException {
+    public void oElementoComOValorNaoExisteNaLista(String value, String condition, String list) throws BusinessException {
         ((ListElements) page).existElementWithValueInList(value, condition, list);
+    }
+
+    @E("^eu clicar no elemento na posição \"(.*)\" da lista$")
+    public void euClicarNoElementoNaPosicaoDaLista(int positon) {
+        ((ListElements) page).clickInValueInListByPosition(positon);
+
     }
 }

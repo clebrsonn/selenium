@@ -19,8 +19,11 @@ public class MenuEditor extends Menu {
         fields.put("botão export", (By.id("export")));
 
         //após selecionar um subgrupo
-        fields.put("botão novo documento", By.cssSelector(".header-area .buttons .edit-new-document-button"));
-        fields.put("search", By.cssSelector("div.header-area .search input"));
+        fields.put("botão novo documento", By.cssSelector(".header-area.buttons .edit-new-document-button"));
+        fields.put("search", By.cssSelector("div.header-area.search input"));
+        fields.put("copiar documento",  By.cssSelector(".header-area.buttons #copy"));
+        fields.put("colar documento",  By.cssSelector(".header-area.buttons #paste"));
+
         BasePage.fields = fields;
     }
 
