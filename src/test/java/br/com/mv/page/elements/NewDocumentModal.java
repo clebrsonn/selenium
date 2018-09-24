@@ -48,7 +48,7 @@ public class NewDocumentModal extends ListElements {
 
 
         List<WebElement> elements = getDriver()
-                .findElements(By.cssSelector(".modal-body .models section .folders .list-group .list-group-item span"));
+                .findElements(By.cssSelector("#new-document-modal .modal-body .models section .folders .list-group .list-group-item span"));
         elements.forEach(
 
                 webElement -> {
@@ -60,9 +60,9 @@ public class NewDocumentModal extends ListElements {
         );
 
 
-        elements = getDriver().findElements(By.cssSelector(".modal-body .models .document-types > div label"));
+        elements = getDriver().findElements(By.cssSelector("#new-document-modal .modal-body .models .document-types > div label"));
         elements.forEach(webElement -> fields.put(webElement.getText(),
-                webElement.getText()
+                webElement
         ));
 
     }

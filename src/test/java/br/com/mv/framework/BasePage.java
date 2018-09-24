@@ -43,7 +43,7 @@ public class BasePage {
 
     //JAVA Generics to Create and return a New Page
 
-    public static <TPage extends BasePage> TPage getInstance(String pageName) {
+    public static <TPage extends BasePage> TPage getInstance(String pageName) throws BusinessException {
 
         //NOTIFICATIONS
         pages.put("Notifications", Notifications.class);
@@ -54,7 +54,7 @@ public class BasePage {
         pages.put("New Document2", NewDocumentModal2.class);
 
         //PAGE ELEMENTS
-        pages.put("Document List", GroupList.class);
+        pages.put("Group List", GroupList.class);
         pages.put("Sub Group List", SubGroup.class);
         pages.put("Menu Editor", MenuEditor.class);
 
@@ -64,6 +64,10 @@ public class BasePage {
 
 
         Class<TPage> classe = (Class<TPage>) pages.get(pageName);
+
+        if (classe == null) {
+            throw new BusinessException("Página '" + pageName + "' não Encontrada");
+        }
 
 
         return getInstance(classe);

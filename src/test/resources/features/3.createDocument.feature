@@ -23,7 +23,7 @@
       Então o elemento "notification success" está "visivel"
 
     Cenario: Criar um documento
-      Dado eu vou a pagina de "Document List"
+      Dado eu vou a pagina de "Group List"
       E eu clicar no "Almoxarifado"
       E eu vou a pagina de "Sub Group List"
       E eu clicar no elemento na posição "1" da lista
@@ -66,3 +66,20 @@
       E eu clicar no "colar documento"
       Dado eu vou a pagina de "view document"
       Então a quantidade de documentos é igual a "x"
+
+
+    Cenario: Copiar/Colar Documento
+      Dado eu vou a pagina de "Group List"
+      Quando A página "Group List" carregar
+      Quando eu clicar no "Documentos"
+      E eu clicar no "UTI Neonatal"
+      Quando eu vou a pagina "Group List"
+      E eu clicar no "7 - Evolução"
+      E o elemento "botão copiar" estiver "ativo"
+      E eu clico no "botão copiar"
+      E eu clico no "Urgência e Emergência"
+      E o elemento "botão colar" estiver "ativo"
+      E eu clico no "botão colar"
+      Então o elemento "notification sucess" está "visivel"
+      Então o texto do elemento "notification description" for igual à "Documento copiado com sucesso."
+

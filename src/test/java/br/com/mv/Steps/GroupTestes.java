@@ -1,25 +1,19 @@
 package br.com.mv.Steps;
 
 import br.com.mv.framework.BasePage;
-import br.com.mv.framework.ListElements;
 import br.com.mv.framework.exceptions.BusinessException;
-import cucumber.api.PendingException;
 import cucumber.api.java.pt.*;
 import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 
 
-public class ContaTestes {
+public class GroupTestes extends TestSteps {
 
-
-    private BasePage page;
-
+    @Quando("^eu vou a pagina \"([^\"]*)\"$")
     @Dado("^eu vou a pagina de \"(.*)\"$")
-    public void queEuVouAPagina(String pageTitle) {
-
+    public void queEuVouAPagina(String pageTitle) throws BusinessException {
         page = BasePage.getInstance(pageTitle);
-
     }
+
 
     @Então("^Eu logo na aplicação$")
     public void euLogoNaAplicacao() {
@@ -27,6 +21,7 @@ public class ContaTestes {
         // page.getInstance(LoginPage.class).logar();
     }
 
+    @E("^eu clico no \"(.*)\"$")
     @Quando("^eu clicar no \"(.*)\"$")
     public void euClicarNo(String element) {
         page.click(element);
@@ -37,30 +32,19 @@ public class ContaTestes {
         page.isPresent(element);
     }
 
+
+    @E("^eu clicar no \"Documentos\" no \"folder directory\" combobox$")
     @Entao("^eu seleciono o valor \"(.*)\" no \"([^\"]*)\" combobox$")
     public void euSelecionoOValorNoCombobox(String value, String element) {
 
-//        BasePage.getInstance(NewFolderModal.class).selectValue(arg1, arg0);
         page.selectValue(element, value);
 
     }
 
     @Quando("^A página \"(.*)\" carregar$")
-    public void aPaginaCarregar(String arg0){
+    public void aPaginaCarregar(String arg0) {
         // Write code here that turns the phrase above into concrete actions
 //        BasePage.getInstance(MenuEditor.class).wait(500);
-    }
-
-    @Entao("^eu seleciono o valor \"([^\"]*)\" na lista$")
-    public void euSelecionoOValorNaLista(String value) {
-
-        ((ListElements) page).selectValueInList(value);
-    }
-
-    @Quando("^eu seleciono o valor \"([^\"]*)\" na lista \"([^\"]*)\"$")
-    public void euSelecionoNaLista(String value, String list) {
-
-        ((ListElements) page).selectValueInListWithList(value, list);
     }
 
 
@@ -89,43 +73,18 @@ public class ContaTestes {
         page.isVisible(element, condition);
     }
 
+    @E("^eu clicar duas vezes no elemento \"(.*)\"$")
     @Quando("^eu clico duas vezes no elemento \"(.*)\"$")
     public void euClicoDuasVezesNoElemento(String element) {
         page.doubleClick(element);
     }
 
-    @Quando("^eu clico duas vezes no valor \"([^\"]*)\" na lista \"([^\"]*)\"$")
-    public void euClicoDuasVezesNoValorNaLista(String value, String list) {
-        ((ListElements) page).doubleClickInList(list, value);
-    }
 
+    @Então("^o texto do elemento \"(.*)\" for igual à \"(.*)\"$")
     @E("^o valor do elemento \"(.*)\" for igual à \"(.*)\"$")
     public void oValorDoElementoForIgualA(String element, String condition) {
         Assert.assertEquals(page.readText(element), condition);
     }
 
-    @E("^o valor do elemento na posição \"([^\"]*)\" é igual à \"([^\"]*)\"$")
-    public void oValorDoElementoNaPosiçãoForIgualA(int position, String condition) {
-        WebElement webElement = ((ListElements) page).selectValueInListByPosition(position);
 
-        Assert.assertEquals(page.readText(webElement), condition);
-
-
-    }
-
-    @E("^eu clico duas vezes no elemento da posição \"([0-9]*)\"$")
-    public void euClicoDuasVezesNoElementoDaPosicao(int position) {
-        ((ListElements) page).doubleClickInPosition(position);
-    }
-
-    @Então("^o elemento com o valor \"([^\"]*)\" \"(existe|nao existe)\" na lista \"([^\"]*)\"$")
-    public void oElementoComOValorNaoExisteNaLista(String value, String condition, String list) throws BusinessException {
-        ((ListElements) page).existElementWithValueInList(value, condition, list);
-    }
-
-    @E("^eu clicar no elemento na posição \"(.*)\" da lista$")
-    public void euClicarNoElementoNaPosicaoDaLista(int positon) {
-        ((ListElements) page).clickInValueInListByPosition(positon);
-
-    }
 }

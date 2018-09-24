@@ -1,8 +1,11 @@
 package br.com.mv.Steps;
 
 import br.com.mv.framework.BasePage;
+import br.com.mv.framework.exceptions.BusinessException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.pt.Dado;
+import cucumber.api.java.pt.Quando;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,7 +39,6 @@ public class BaseTests {
 //        Thread.sleep(500);
 
     }
-
 
     @After
     public void teardown() {
