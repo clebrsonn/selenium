@@ -2,68 +2,117 @@
    @DocumentTest
    Funcionalidade: Testar as operacoes de criação. edição e rmeoção de "pastas" do sistema
 
-     Cenario: Criar uma nova pasta Raiz
-       Dado eu vou a pagina de "Menu Editor"
-       Quando A página "Menu Editor" carregar
+     Esquema do Cenario: Criar uma nova pasta Raiz
+       Dado eu vou a pagina de "Login"
+       E eu preencher o campo "username field" com o valor "<user>"
+       E eu preencher o campo "password field" com o valor "<user>"
+       E eu clicar no "login button"
+       Quando eu vou a pagina de "Menu Editor"
+       E A página "Menu Editor" carregar
        E eu clicar no "botão Nova Pasta"
        E eu vou a pagina de "New Folder"
        Quando o elemento "new folder modal" carregar
+       E eu preencher o campo "folder name" com o valor "<grupo>"
        E eu seleciono o valor "Raiz" no "folder directory" combobox
-       E eu preencher o campo "folder name" com o valor "Documentos Teste Sprint"
        E o elemento "botão criar" estiver "ativo"
        E eu clicar no "botão criar"
        E eu espero o elemento "new folder modal" ficar "invisivel"
        E o elemento "new folder modal" está "invisivel"
-       E eu vou a pagina de "Notifications"
-       Então o elemento "notification success" está "visivel"
-       Então o texto do elemento "notification title" for igual à "Sucesso"
-       Então o texto do elemento "notification description" for igual à "Grupo salvo com Sucesso."
-       Então o elemento com o valor "Documentos Teste Sprint" "existe" na lista "Group List"
+       E o elemento "notification success" está "visivel"
+       E o texto do elemento "notification title" for igual à "Sucesso"
+       E o texto do elemento "notification description" for igual à "A pasta foi criada."
+       E eu vou a pagina de "Group List"
+       Então o elemento com o valor "<grupo>" "existe" na lista "Group List"
+
+       Exemplos:
+         | user  | grupo                  |
+         | dbamv | Documento Teste Sprint |
+#         | dbamv | Ducumento Teste Sprint2 |
 
 
-     Cenario: Criar uma nova subpasta
-       Dado eu vou a pagina de "Menu Editor"
-       Quando A página "Menu Editor" carregar
+     Esquema do Cenario: Criar uma nova subpasta
+       Dado eu vou a pagina de "Login"
+       E eu preencher o campo "username field" com o valor "<user>"
+       E eu preencher o campo "password field" com o valor "<user>"
+       E eu clicar no "login button"
+       Quando eu vou a pagina de "Menu Editor"
+       E A página "Menu Editor" carregar
        E eu clicar no "botão Nova Pasta"
        E eu vou a pagina de "New Folder"
        Quando o elemento "new folder modal" carregar
-       E eu seleciono o valor "Documentos Teste Sprint" no "folder directory" combobox
-       E eu preencher o campo "folder name" com o valor "Subpasta"
+       E eu seleciono o valor "<grupo>" no "folder directory" combobox
+       E eu preencher o campo "folder name" com o valor "<subgrupo>"
        E o elemento "botão criar" estiver "ativo"
        E eu clicar no "botão criar"
        E eu espero o elemento "new folder modal" ficar "invisivel"
        E o elemento "new folder modal" está "invisivel"
-       E eu vou a pagina de "Notifications"
        Então o elemento "notification success" está "visivel"
        Então o texto do elemento "notification title" for igual à "Sucesso"
-       Então o texto do elemento "notification description" for igual à "Subpasta criada com sucesso."
+       Então o texto do elemento "notification description" for igual à "A subpasta foi criada."
        Quando eu vou a pagina de "Group List"
-       Quando eu clicar no "Documentos Teste Sprint"
-       E eu vou a pagina de "Sub Group"
-       Então eu espero o elemento "Subpasta" ficar "visivel"
+       Quando eu clicar no "<grupo>"
+       E eu vou a pagina de "Sub Group List"
+       Então eu espero o elemento "<subgrupo>" ficar "visivel"
+
+       Exemplos:
+         | user  | grupo                  | subgrupo     |
+         | dbamv | Documento Teste Sprint | Teste Sprint |
+#         | dbamv | Ducumento Teste Sprint2 | Teste Sprint2 |
 
 
-     Cenario: Excluir pasta Raiz com conteúdo
-       Dado eu vou a pagina de "Group List"
-       Quando A página "Group List" carregar
-       E eu clico duas vezes no elemento "Documentos Teste Sprint"
+     Esquema do Cenario: Excluir pasta Raiz com conteúdo
+       Dado eu vou a pagina de "Login"
+       E eu preencher o campo "username field" com o valor "<user>"
+       E eu preencher o campo "password field" com o valor "<user>"
+       E eu clicar no "login button"
+       Quando eu vou a pagina de "Group List"
+       E A página "Group List" carregar
+       E eu clico duas vezes no elemento "<grupo>"
        E eu clicar no "remove button"
        Então o elemento "notification error" está "visivel"
        Então o texto do elemento "notification description" for igual à "Grupo não pode ser deletado. Possui uma ou mais dependências."
 
-     Cenario: Editar Grupo
+       Exemplos:
+         | user  | grupo                  |
+         | dbamv | Documento Teste Sprint |
+#         | dbamv | Ducumento Teste Sprint2 |
+
+
+     Esquema do Cenario: Editar Grupo
+       Dado eu vou a pagina de "Login"
+       E eu preencher o campo "username field" com o valor "<user>"
+       E eu preencher o campo "password field" com o valor "<user>"
+       E eu clicar no "login button"
        Dado eu vou a pagina de "Group List"
-       Quando eu clico duas vezes no elemento "Documentos Teste Sprint"
-       E eu preencher o campo "input folder name" com o valor "Documentos"
+       Quando eu clico duas vezes no elemento "<grupo>"
+       E eu preencher o campo "input folder name" com o valor "<novo_nome>"
        E eu clicar no "confirm button"
-       E eu vou a pagina de "Notifications"
        Então o elemento "notification success" está "visivel"
        Então o texto do elemento "notification title" for igual à "Sucesso"
        Então o texto do elemento "notification description" for igual à "Grupo atualizado com sucesso."
 
 
+       Exemplos:
+         | user  | grupo                  | novo_nome  |
+         | dbamv | Documento Teste Sprint | Documentos |
+#         | dbamv | Ducumento Teste Sprint2 | Documentos2 |
 
 
+     Esquema do Cenario: Não é possível criar uma pasta nova
+       Dado eu vou a pagina de "Login"
+       E eu preencher o campo "username field" com o valor "<user>"
+       E eu preencher o campo "password field" com o valor "<user>"
+       E eu clicar no "login button"
+       Quando eu vou a pagina de "Menu Editor"
+       E A página "Menu Editor" carregar
+       E eu clicar no "botão Nova Pasta"
+       E eu vou a pagina de "New Folder"
+       Quando o elemento "new folder modal" carregar
+       E eu seleciono o valor "Raiz" no "folder directory" combobox
+       Então o elemento "botão criar" estiver "inativo"
+       E o elemento "new folder modal" está "visivel"
 
-
+       Exemplos:
+         | user  |
+         | dbamv |
 

@@ -7,7 +7,16 @@ import cucumber.api.java.pt.Quando;
 
 public class TestSteps {
 
-    protected BasePage page;
+    protected static BasePage page;
+
+    private String pageTitle;
+
+
+    public void setPage(String pageTitle) throws BusinessException {
+        this.pageTitle = pageTitle;
+        page = BasePage.getInstance(pageTitle);
+    }
+
 
 
 }

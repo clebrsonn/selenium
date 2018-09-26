@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 public class BasePage {
@@ -45,8 +46,6 @@ public class BasePage {
 
     public static <TPage extends BasePage> TPage getInstance(String pageName) throws BusinessException {
 
-        //NOTIFICATIONS
-        pages.put("Notifications", Notifications.class);
 
         //MODALS
         pages.put("New Folder", NewFolderModal.class);
@@ -154,20 +153,35 @@ public class BasePage {
     }
 
     public void isVisible(String element, String condition) {
+        //NOTIFICATIONS
+        fields.put("notification success", By.cssSelector(".notifications .sucess"));
+        fields.put("notification warning", By.cssSelector(".notifications .warning"));
+        fields.put("notification error", By.cssSelector(".notifications .error"));
+
+        fields.put("notification title", By.cssSelector(".notifications .notification-title"));
+        fields.put("notification description", By.cssSelector(".notifications .notification-content"));
+
+
         if (condition.equalsIgnoreCase(Comparator.VISIBLE)) {
             new WebDriverWait(getDriver(), 20)
                     .until(ExpectedConditions
                             .visibilityOf(getWebElement(element)));
 
-        } else if (condition.equalsIgnoreCase(Comparator.INVISIBLE)) {
+        } else if (condition.equalsIgnoreCase(Comparator.INVISIBLE)) try {
             new WebDriverWait(getDriver(), 20)
                     .until(ExpectedConditions.invisibilityOf(getWebElement(element)));
+
+        } catch (NoSuchElementException e) {
+            System.out.println(e);
+
         }
     }
 
     protected <T> WebElement getWebElement(T elementAttr) {
         if (elementAttr instanceof String) {
+
             elementAttr = (T) fields.get(elementAttr);
+
         }
         if (elementAttr.getClass().getName().contains("By")) {
             return getDriver().findElement((By) elementAttr);

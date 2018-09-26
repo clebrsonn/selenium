@@ -51,7 +51,7 @@ public class ListElements extends BasePage {
 
     public WebElement selectValueInListByPosition(int position) {
 
-        getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         return getDriver().findElement(By.cssSelector(" li:nth-child(" + position + ")"));
     }
@@ -61,22 +61,24 @@ public class ListElements extends BasePage {
         doubleClick(selectValueInListByPosition(position));
     }
 
-    public void existElementWithValueInList(String value, String condition, String list) throws BusinessException {
-        List<WebElement> elements = getWebElement(list).findElements(By.linkText(value));
+    public void existElementWithValueInList(String value, String condition, ListElements list) throws BusinessException {
+        // List<WebElement> elements = getWebElement(list).findElements(By.linkText(value));
 
-        if (elements == null && condition.equalsIgnoreCase(Comparator.NOTEXISTS)) {
+        WebElement element = list.getWebElement(value);
+
+        if (element != null && condition.equalsIgnoreCase(Comparator.NOTEXISTS)) {
             throw new BusinessException("Elemento " + condition + "!");
         }
-        assert elements != null;
-        if (condition.equalsIgnoreCase(Comparator.EXIST) && elements.size() == 0) {
+        if (condition.equalsIgnoreCase(Comparator.EXIST) && element == null) {
             throw new BusinessException("Elemento " + condition + "!");
         }
+
 
     }
 
     public void clickInValueInListByPosition(int position) {
 
-        getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.MILLISECONDS);
 
 //TODO: verificar como generalizar para qualquer filho de uma lista e não o li.
         WebElement webElement = getDriver().findElement(By.cssSelector(" li:nth-child(" + position + ")"));

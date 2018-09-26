@@ -18,6 +18,8 @@ public class NewDocumentModal extends ListElements {
 
     public NewDocumentModal(WebDriver driver) {
         super(driver);
+        fields.put("New Document Modal", By.cssSelector("#new-document-modal .modal-header"));
+
         fields.put("new document modal", By.cssSelector("#new-document-modal .modal-header"));
         fields.put("search document model", By.cssSelector("#new-document-modal .modal-header .search"));
         fields.put("new document title", By.cssSelector("#new-document-modal .modal-header .dialog-title span.title"));

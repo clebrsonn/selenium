@@ -10,12 +10,12 @@ public class Notifications extends BasePage {
     public Notifications(WebDriver driver) {
         super(driver);
 
-        fields.put("notification success", By.cssSelector(".notifications .sucess"));
-        fields.put("notification warning", By.cssSelector(".notifications .warning"));
-        fields.put("notification error", By.cssSelector(".notifications .warning"));
+        fields.put("notification success", (By.cssSelector(".notifications .sucess")));
+        fields.put("notification warning", (By.cssSelector(".notifications .warning")));
+        fields.put("notification error", (By.cssSelector(".notifications .error")));
 
-        fields.put("notification title", By.cssSelector(".notifications .notification-title"));
-        fields.put("notification description", By.cssSelector(".notifications .notification-content"));
+        fields.put("notification title", (By.cssSelector(".notifications .notification-title")));
+        fields.put("notification description", (By.cssSelector(".notifications .notification-content")));
 
 
     }

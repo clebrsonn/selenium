@@ -30,8 +30,8 @@ public class SubGroup extends GroupList {
 
         new WebDriverWait(getDriver(), 10)
                 .until(ExpectedConditions
-                        .presenceOfNestedElementLocatedBy((By) BasePage.fields.get("document list"),
-                                By.cssSelector(".card-body > ul > li")));
+                        .presenceOfNestedElementLocatedBy((By) BasePage.fields.get("group list"),
+                                By.cssSelector(".card-body > ul")));
 
 
         List<WebElement> elements = getDriver()

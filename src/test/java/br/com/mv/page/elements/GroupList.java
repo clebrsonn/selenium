@@ -15,7 +15,7 @@ public class GroupList extends ListElements {
     public GroupList(WebDriver driver) {
         super(driver);
 
-        fields.put("document list", (By.className("edit-document-list")));
+        fields.put("group list", (By.cssSelector(".edit-document-list")));
 
         fields.put("confirm button", (By.cssSelector(".edit-document-list " +
                 "> div.card  .card-header .edit .edit-buttons button.save-edit")));
@@ -39,5 +39,8 @@ public class GroupList extends ListElements {
         List<WebElement> elements = getDriver().findElements(By.cssSelector(".edit-document-list > div.card"));
         elements.forEach(webElement -> fields.put(webElement.getText().split("\n")[1], webElement));
     }
+
+
+
 
 }
