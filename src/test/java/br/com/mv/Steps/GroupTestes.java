@@ -1,6 +1,7 @@
 package br.com.mv.Steps;
 
 import br.com.mv.framework.exceptions.BusinessException;
+import cucumber.api.PendingException;
 import cucumber.api.java.pt.*;
 import org.junit.Assert;
 
@@ -33,7 +34,7 @@ public class GroupTestes extends TestSteps {
     }
 
 
-    @E("^eu clicar no \"Documentos\" no \"folder directory\" combobox$")
+    @E("^eu clicar no \"(.*)\" no \"(.*)\" combobox$")
     @Entao("^eu seleciono o valor \"(.*)\" no \"([^\"]*)\" combobox$")
     public void euSelecionoOValorNoCombobox(String value, String element) {
 

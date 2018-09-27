@@ -3,6 +3,7 @@ package br.com.mv.Steps;
 import br.com.mv.framework.BasePage;
 import br.com.mv.framework.ListElements;
 import br.com.mv.framework.exceptions.BusinessException;
+import cucumber.api.PendingException;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Então;
@@ -29,14 +30,14 @@ public class ListTest extends TestSteps {
         ((ListElements) TestSteps.page).doubleClickInList(list, value);
     }
 
-    @E("^o valor do elemento na posição \"([^\"]*)\" é igual à \"([^\"]*)\"$")
+    @E("o valor do elemento na posição \"(\\d+)\" é igual à \"(.*)\"$")
     public void oValorDoElementoNaPosicaoForIgualA(int position, String condition) {
         WebElement webElement = ((ListElements) TestSteps.page).selectValueInListByPosition(position);
 
         Assert.assertEquals(TestSteps.page.readText(webElement), condition);
     }
 
-    @E("^eu clico duas vezes no elemento da posição \"([0-9]*)\"$")
+    @E("eu clico duas vezes no elemento da posição \"(\\d+)\"")
     public void euClicoDuasVezesNoElementoDaPosicao(int position) {
         ((ListElements) TestSteps.page).doubleClickInPosition(position);
     }
@@ -48,9 +49,9 @@ public class ListTest extends TestSteps {
                 existElementWithValueInList(value, condition, BasePage.getInstance(list));
     }
 
-    @E("^eu clicar no elemento na posição \"(.*)\" da lista$")
-    public void euClicarNoElementoNaPosicaoDaLista(int positon) {
+    @E("eu clicar no elemento na posição \"(\\d+)\" da lista")
+    public void euClicarNoElementoNaPosicaoDaLista(Integer positon) {
         ((ListElements) TestSteps.page).clickInValueInListByPosition(positon);
-
     }
+
 }

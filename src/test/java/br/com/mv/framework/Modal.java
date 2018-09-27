@@ -16,7 +16,7 @@ public class Modal extends BasePage {
         this.fields.put("footer", By.className("modal-footer"));
 
 
-        BasePage.fields = this.fields;
+//        BasePage.fields = this.fields;
     }
 
     protected HashMap<String, Object> fields = new HashMap<>();

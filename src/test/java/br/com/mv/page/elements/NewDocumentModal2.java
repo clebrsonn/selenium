@@ -32,12 +32,12 @@ public class NewDocumentModal2 extends Modal {
 
 
         fields.put("botão voltar", By.cssSelector("#new-document-modal .modal-footer button.btn-outline-default"));
-        fields.put("botão criar", By.cssSelector("#new-document-modal .modal-footer button.btn-outline-primary"));
+        fields.put("botão criar documento", By.cssSelector("#new-document-modal .modal-footer button.btn-outline-primary"));
 
 
         BasePage.fields = this.fields;
 
     }
 
-    protected HashMap<String, Object> fields = new HashMap<>();
+//    protected HashMap<String, Object> fields = new HashMap<>();
 }

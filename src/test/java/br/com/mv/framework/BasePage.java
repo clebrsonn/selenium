@@ -1,7 +1,7 @@
 package br.com.mv.framework;
 
 import br.com.mv.framework.exceptions.BusinessException;
-import br.com.mv.page.DocumentViewer;
+import br.com.mv.page.DocumentList;
 import br.com.mv.page.LoginPage;
 import br.com.mv.page.elements.*;
 import org.openqa.selenium.By;
@@ -58,7 +58,7 @@ public class BasePage {
         pages.put("Menu Editor", MenuEditor.class);
 
         //PAGES
-        pages.put("Home", DocumentViewer.class);
+        pages.put("Document List", DocumentList.class);
         pages.put("Login", LoginPage.class);
 
 

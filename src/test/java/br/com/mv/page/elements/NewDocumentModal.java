@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NewDocumentModal extends ListElements {
 
@@ -50,30 +51,52 @@ public class NewDocumentModal extends ListElements {
 
 
         List<WebElement> elements = getDriver()
-                .findElements(By.cssSelector("#new-document-modal .modal-body .models section .folders .list-group .list-group-item span"));
+                .findElements(
+                        By.cssSelector("#new-document-modal .modal-body .models section " +
+                                ".folders .list-group button"));
+
+        int[] i = {1};
         elements.forEach(
 
                 webElement -> {
+                    WebElement webElementChild = webElement.findElement(By.cssSelector(":nth-child(" + i[0] + ") span"));
+
                     JavascriptExecutor js = (JavascriptExecutor) getDriver();
-                    js.executeScript("arguments[0].scrollIntoView(true);", webElement);
-                    fields.put(webElement.getText(), webElement);
+                    js.executeScript("arguments[0].scrollIntoView();", webElementChild);
+                    new WebDriverWait(getDriver(), 10)
+                            .until(ExpectedConditions
+                                    .elementToBeClickable(getWebElement(webElementChild)));
+
+                    fields.put(webElementChild.getText(), webElementChild);
+                    i[0]++;
+
                 }
 
         );
 
 
-        elements = getDriver().findElements(By.cssSelector("#new-document-modal .modal-body .models .document-types > div label"));
-        elements.forEach(webElement -> fields.put(webElement.getText(),
-                webElement
-        ));
+        elements = getDriver().findElements(By.cssSelector("#new-document-modal .modal-body .models .document-types > div"));
+
+        i[0] = 1;
+        elements.forEach(webElement -> {
+                    WebElement webElementChild = webElement.findElement(By.cssSelector("div:nth-child(" + i[0] + ") button label"));
+                    fields.put(webElementChild.getText(), webElementChild);
+                    i[0]++;
+
+                }
+        );
+
 
     }
 
     @Override
     public <T> void click(T elementAttr) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(elementAttr));
 
+
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView();",
+                getWebElement(elementAttr));
+        
         new WebDriverWait(getDriver(), 10)
                 .until(ExpectedConditions
                         .elementToBeClickable(getWebElement(elementAttr)));

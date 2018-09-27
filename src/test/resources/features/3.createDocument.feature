@@ -63,42 +63,24 @@
       E eu clicar no "botão novo documento"
       E eu vou a pagina de "New Document"
       Quando o elemento "new document modal" carregar
-      E eu clicar no "Em branco"
       E eu clicar no "Documento em branco"
       Quando o elemento "botão próximo" estiver "ativo"
       E eu clicar no "botão próximo"
       E eu vou a pagina de "New Document2"
       Quando o elemento "new document modal2" carregar
-
+      E eu preencher o campo "document name" com o valor "novo documento testes"
+      E eu clicar no "botão criar documento"
 
       Exemplos:
-        | user  | grupo             | subgrupo              |
-        | dbamv | Doc Teste Sprint  | Teste doc Sprint      |
-        | dbamv | Doc Teste Sprint2 | Sub Doc Teste Sprint2 |
-
-
-#
-#      E eu seleciono o valor "Almoxarifado" no "folder directory" combobox
-#      E eu preencher o campo "folder name" com o valor "testes"
-#      E o elemento "botão salvar" estiver "ativo"
-#      E eu clicar no "botão salvar"
-#      E eu espero o elemento "new folder modal" ficar "invisivel"
-#      E o elemento "new folder modal" está "invisivel"
-#      Quando eu vou a pagina de "Document List"
-#      Quando eu clicar no "Almoxarifado"
-#      E eu vou a pagina de "Sub Group List"
-#      Então eu espero o elemento "testes" ficar "visivel"
-#      E eu vou a pagina de "Home"
-#      Então o elemento "notification success" está "visivel"
-
+        | user  | grupo            |
+        | dbamv | Doc Teste Sprint |
 
     Esquema do Cenario:
       Dado eu vou a pagina de "Login"
       E eu preencher o campo "username field" com o valor "<user>"
       E eu preencher o campo "password field" com o valor "<user>"
       E eu clicar no "login button"
-
-      Dado eu vou a pagina de "document list"
+      Dado eu vou a pagina de "Group List"
       E eu clicar no "Almoxarifado"
       E eu clicar no "Solicitações"
       Dado eu vou a pagina de "view document"
