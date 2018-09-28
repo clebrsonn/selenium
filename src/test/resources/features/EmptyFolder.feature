@@ -1,5 +1,6 @@
    # language: pt
-   @DocumentTest
+   @GroupTest
+   @ListTest
    Funcionalidade: Testar as operacoes de criação. edição e rmeoção de "pastas" do sistema
 
      Cenario: Criar uma nova pasta Raiz

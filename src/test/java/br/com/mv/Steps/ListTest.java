@@ -54,4 +54,9 @@ public class ListTest extends TestSteps {
         ((ListElements) TestSteps.page).clickInValueInListByPosition(positon);
     }
 
+    @Então("^a quantidade de documentos é igual a \"([^\"]*)\"$")
+    public void aQuantidadeDeDocumentosÉIgualA(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
